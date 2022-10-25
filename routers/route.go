@@ -18,5 +18,5 @@ func StartServer(ctl controllers.Controller) error {
 	r.GET("/:userName", ctl.UserController.GetUser)
 	r.PUT("/:userName", middlewares.UserAuthorization(), ctl.UserController.Update)
 
-	return r.Run(fmt.Sprintf("%s:%d", config.HOST, config.SERVER_PORT))
+	return r.Run(fmt.Sprintf(":%d", config.SERVER_PORT))
 }
