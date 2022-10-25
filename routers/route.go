@@ -1,13 +1,14 @@
 package routers
 
 import (
-	"dibagi/config"
 	"dibagi/controllers"
 	"dibagi/middlewares"
-	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
+
+var PORT = os.Getenv("PORT")
 
 func StartServer(ctl controllers.Controller) error {
 	r := gin.Default()
@@ -18,5 +19,5 @@ func StartServer(ctl controllers.Controller) error {
 	r.GET("/:userName", ctl.UserController.GetUser)
 	r.PUT("/:userName", middlewares.UserAuthorization(), ctl.UserController.Update)
 
-	return r.Run(fmt.Sprintf(":%d", config.SERVER_PORT))
+	return r.Run(":" + PORT)
 }
