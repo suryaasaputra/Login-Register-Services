@@ -16,8 +16,8 @@ func StartServer(ctl controllers.Controller) error {
 
 	userRouter := r.Group("/user")
 	{
-		userRouter.Use(middlewares.Authentication())
 		userRouter.GET("/:userName", ctl.UserController.GetUser)
+		userRouter.Use(middlewares.Authentication())
 		userRouter.PUT("/:userName", middlewares.UserAuthorization(), ctl.UserController.Update)
 	}
 
