@@ -18,6 +18,6 @@ func NewController(userController *userController) Controller {
 
 func (c Controller) HomeController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "welcome",
+		"message": "welcome to dibagi.in",
 	})
 }
