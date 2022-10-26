@@ -10,7 +10,7 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID  `gorm:"default:uuid_generate_v4();type:uuid" json:"id"`
+	ID        string     `gorm:"primaryKey" json:"id"`
 	Email     string     `gorm:"not null;uniqueIndex" json:"email" valid:"required~Email is required,email~Invalid email address"`
 	UserName  string     `gorm:"not null;uniqueIndex" json:"user_name" valid:"required~Username is required"`
 	Password  string     `gorm:"not null" json:"password" valid:"required~Password is required,minstringlength(8)"`
@@ -21,7 +21,7 @@ type User struct {
 }
 
 type CreateUserResponse struct {
-	ID        uuid.UUID  `json:"id"`
+	ID        string     `json:"id"`
 	Email     string     `json:"email"`
 	UserName  string     `json:"user_name"`
 	FullName  string     `json:"full_name"`
@@ -29,7 +29,7 @@ type CreateUserResponse struct {
 	CreatedAt *time.Time `json:"created_at"`
 }
 type EditUserResponse struct {
-	ID         uuid.UUID  `json:"id"`
+	ID         string     `json:"id"`
 	Email      string     `json:"email"`
 	UserName   string     `json:"user_name"`
 	FullName   string     `json:"full_name"`
@@ -38,7 +38,7 @@ type EditUserResponse struct {
 }
 
 type GetUserResponse struct {
-	ID         uuid.UUID  `json:"id"`
+	ID         string     `json:"id"`
 	Email      string     `json:"email"`
 	UserName   string     `json:"user_name"`
 	FullName   string     `json:"full_name"`
@@ -57,6 +57,8 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	stringUUID := (uuid.New().String())
+	u.ID = stringUUID
 	hashedPassword, err := helpers.HashPassword(u.Password)
 	if err != nil {
 		return err

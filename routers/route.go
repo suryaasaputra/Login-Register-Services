@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var PORT = os.Getenv("PORT")
-
 func StartServer(ctl controllers.Controller) error {
 	r := gin.Default()
 	r.GET("/", ctl.HomeController)
@@ -21,6 +19,11 @@ func StartServer(ctl controllers.Controller) error {
 		userRouter.Use(middlewares.Authentication())
 		userRouter.GET("/:userName", ctl.UserController.GetUser)
 		userRouter.PUT("/:userName", middlewares.UserAuthorization(), ctl.UserController.Update)
+	}
+
+	var PORT = os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "8080"
 	}
 
 	return r.Run(":" + PORT)

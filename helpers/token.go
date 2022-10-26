@@ -8,10 +8,9 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
-func GenerateToken(id uuid.UUID, username string) (string, error) {
+func GenerateToken(id string, username string) (string, error) {
 	claims := jwt.MapClaims{
 		"id":        id,
 		"user_name": username,

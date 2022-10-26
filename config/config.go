@@ -12,7 +12,7 @@ var (
 	SERVER_PORT, _ = strconv.Atoi(os.Getenv("SERVER_PORT"))
 	SECRET_KEY     = os.Getenv("SECRET_KEY")
 
-	HOST        = os.Getenv("HOST")
+	HOST        = os.Getenv("DB_HOST")
 	DB_NAME     = os.Getenv("DB_NAME")
 	DB_PORT, _  = strconv.Atoi(os.Getenv("DB_PORT"))
 	DB_USERNAME = os.Getenv("DB_USERNAME")

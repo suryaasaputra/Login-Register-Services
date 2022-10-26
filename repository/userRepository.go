@@ -52,7 +52,7 @@ func (u UserDb) GetUserByUserName(userName string) models.GetUserResponse {
 	User := models.User{}
 
 	u.db.Where("user_name =? ", userName).First(&User)
-	UserResponse := models.GetUserResponse{
+	response := models.GetUserResponse{
 		ID:         User.ID,
 		UserName:   User.UserName,
 		Email:      User.Email,
@@ -61,7 +61,7 @@ func (u UserDb) GetUserByUserName(userName string) models.GetUserResponse {
 		Created_at: User.CreatedAt,
 		Updated_at: User.UpdatedAt,
 	}
-	return UserResponse
+	return response
 }
 
 func (u UserDb) EditUser(username string, newUser models.User) models.EditUserResponse {
