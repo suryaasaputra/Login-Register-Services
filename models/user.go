@@ -2,10 +2,11 @@ package models
 
 import (
 	"dibagi/helpers"
+	"strings"
 	"time"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/google/uuid"
+	"github.com/rs/xid"
 	"gorm.io/gorm"
 )
 
@@ -57,12 +58,16 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if err != nil {
 		return err
 	}
-	stringUUID := (uuid.New().String())
-	u.ID = stringUUID
+	newID := xid.New().String()
+	u.ID = newID
 	hashedPassword, err := helpers.HashPassword(u.Password)
 	if err != nil {
 		return err
 	}
+
+	userName := strings.ReplaceAll(u.UserName, " ", "")
+	lowerCase := strings.ToLower(userName)
+	u.UserName = lowerCase
 	u.Password = hashedPassword
 	return nil
 }
